@@ -15,8 +15,9 @@ class App(Frame):
         self.set_logo()
         self.menu_bar()
         self.instructions()
-        self.entry_url()
         self.download_button()
+        self.search_folder_button()
+        self.entry_url()
 
     def set_logo(self):
         self.img = ImageTk.PhotoImage(Image.open('img/youtube-logo.png').resize(size=[60, 60]))
@@ -32,16 +33,28 @@ class App(Frame):
         self.mb.add_command(label="Exit", command=root.destroy)
 
     def instructions(self):
-        self.description = Label(root, text="Download your youtube Videos, add the link to the below field")
-        self.description.grid(row=0, column=1)
+        self.description = Label(
+            root, 
+            text="Download your youtube Videos\n \
+                Add the link to the below field and click download, \
+                your video will be downloaded automatically in the \
+                highest resolution", 
+            wraplengt=350, 
+            width=53
+            )
+        self.description.grid(row=0, column=1, columnspan=2)
     
     def entry_url(self):
         self.video_url = Entry(root)
         self.video_url.grid(row=1,column=1, sticky=EW, columnspan=2)
 
     def download_button(self):
-        self.download_btn = Button(root, text="download", command= lambda: download_accion(self.video_url))
-        self.download_btn.grid(row=2,column=1)
+        self.download_btn = Button(root, text="download", command= lambda: download_accion(self.video_url), width=10)
+        self.download_btn.grid(row=2,column=1, sticky=EW, padx=2)
+
+    def search_folder_button(self):
+        self.folder_btn = Button(root, text="folder", command=None, width=10)
+        self.folder_btn.grid(row=2,column=2, sticky=EW, padx=2)
 
 if __name__ == "__main__":
     root = Tk()
