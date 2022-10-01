@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import messagebox as MessageBox
 from PIL import Image, ImageTk
 from actions.actions import author_info_popup, download_accion
+from tkinter import filedialog
 class App(Frame):
 
     def __init__(self, parent, *args, **kwargs):
@@ -12,12 +13,16 @@ class App(Frame):
         self.parent.geometry("480x320")
         self.config(bd=15, width=480,height=320)
         self.parent.title("Download youtube videos")
+        self.folder_path= StringVar()
+        self.browse_message = StringVar()
+        self.file_folder = None
         self.set_logo()
         self.menu_bar()
         self.instructions()
         self.download_button()
-        self.search_folder_button()
+        self.browse_folder_button()
         self.entry_url()
+        self.browse_folder_label()
 
     def set_logo(self):
         self.img = ImageTk.PhotoImage(Image.open('img/youtube-logo.png').resize(size=[60, 60]))
@@ -49,12 +54,22 @@ class App(Frame):
         self.video_url.grid(row=1,column=1, sticky=EW, columnspan=2)
 
     def download_button(self):
-        self.download_btn = Button(root, text="download", command= lambda: download_accion(self.video_url), width=10)
+        self.download_btn = Button(root, text="download", command= lambda: download_accion(self.video_url, self.file_folder), width=10)
         self.download_btn.grid(row=2,column=1, sticky=EW, padx=2)
 
-    def search_folder_button(self):
-        self.folder_btn = Button(root, text="folder", command=None, width=10)
+    def browse_folder_button(self):
+        self.folder_btn = Button(root, text="folder", command=self.browse_action, width=10)
         self.folder_btn.grid(row=2,column=2, sticky=EW, padx=2)
+    
+    def browse_folder_label(self):
+        self.browse_message.set(f"Set a download folder")
+        self.browse_lbl = Label(master=self.parent,textvariable=self.browse_message)
+        self.browse_lbl.grid(row=3, column=1, columnspan=2, sticky=W)
+
+    def browse_action(self):
+        self.file_folder = filedialog.askdirectory()
+        self.folder_path.set(self.file_folder)
+        self.browse_message.set(f"Download folder:   {str(self.file_folder)[0:6]}...   {str(self.file_folder)[-40:]}")
 
 if __name__ == "__main__":
     root = Tk()
