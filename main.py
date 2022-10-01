@@ -3,7 +3,7 @@ import os
 from tkinter import *
 from tkinter import messagebox as MessageBox
 from PIL import Image, ImageTk
-from actions.actions import author_info_popup, download_accion
+from actions.actions import author_info_popup, download_accion, show_video_info_action
 from tkinter import filedialog
 class App(Frame):
 
@@ -19,7 +19,7 @@ class App(Frame):
         self.set_logo()
         self.menu_bar()
         self.instructions()
-        self.download_button()
+        self.search_button()
         self.browse_folder_button()
         self.entry_url()
         self.browse_folder_label()
@@ -53,9 +53,10 @@ class App(Frame):
         self.video_url = Entry(root)
         self.video_url.grid(row=1,column=1, sticky=EW, columnspan=2)
 
-    def download_button(self):
-        self.download_btn = Button(root, text="download", command= lambda: download_accion(self.video_url, self.file_folder), width=10)
-        self.download_btn.grid(row=2,column=1, sticky=EW, padx=2)
+    def search_button(self):
+        self.search_btn = Button(root, text="Search", command= lambda: show_video_info_action(self.video_url, self.file_folder), width=10)
+        self.search_btn.grid(row=2,column=1, sticky=EW, padx=2)
+
 
     def browse_folder_button(self):
         self.folder_btn = Button(root, text="folder", command=self.browse_action, width=10)
