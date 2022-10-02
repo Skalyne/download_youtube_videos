@@ -1,6 +1,6 @@
 from pytube import YouTube
-from tkinter import EW, NW, messagebox as MessageBox
-from tkinter import Label, Button
+from tkinter import E, EW, NW, W, messagebox as MessageBox
+from tkinter import Label, Button, ttk
 from PIL import Image, ImageTk
 from urllib.request import urlopen
 import io
@@ -19,6 +19,7 @@ def show_video_info_action(video_url, file_folder):
 
     try: 
         video = YouTube(video_url.get())
+        thumbnail_url = urlopen(video.thumbnail_url)
     except:
         MessageBox.showerror(
             "Url not valid",
@@ -26,8 +27,7 @@ def show_video_info_action(video_url, file_folder):
         )
         video_url.delete(0, 'end')
         return None
-
-    thumbnail_url = urlopen(video.thumbnail_url)
+    
     raw_data = thumbnail_url.read()
     thumbnail_url.close()
     im = Image.open(io.BytesIO(raw_data))
@@ -37,12 +37,12 @@ def show_video_info_action(video_url, file_folder):
     image_video_lbl.image = video_image
     image_video_lbl.grid(row=4,column=0, rowspan=3)
 
-    title_lbl = Label(text=f"Title: {str(video.title)[0:30]}...")
-    title_lbl.grid(row=4,column=1, sticky=NW)
+    title_lbl = ttk.Label(text=f"Title: {str(video.title)}...")
+    title_lbl.grid(row=4,column=1, sticky=W, padx=10, columnspan=2)
     download_button(video_url, file_folder)
 
 def download_button(video_url, file_folder):
-        download_btn = Button(text="Download", command= lambda: download_accion(video_url, file_folder), width=10)
+        download_btn = ttk.Button(text="Download", command= lambda: download_accion(video_url, file_folder), width=10)
         download_btn.grid(row=7,column=1, columnspan=2, sticky=EW, padx=2, pady=2)
 
 def author_info_popup():

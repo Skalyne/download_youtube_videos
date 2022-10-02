@@ -1,17 +1,21 @@
 from tkinter import *
 from PIL import Image, ImageTk
 from actions.actions import author_info_popup, show_video_info_action
-from tkinter import filedialog
+from tkinter import filedialog, ttk
+import sv_ttk
 
 class App(Frame):
 
     def __init__(self, parent, *args, **kwargs):
         Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-
+        
         # Config Main frame
         self.parent.geometry("480x320")
+        sv_ttk.set_theme("light")
         self.parent.title("Download youtube videos")
+        root.columnconfigure(1, weight= 1, minsize=200)
+        root.columnconfigure(2, weight= 1, minsize=200)
 
         # Variables
         self.folder_path= StringVar()
@@ -43,35 +47,36 @@ class App(Frame):
     def instructions(self):
         self.description = Label(
             root, 
-            text="Download your youtube Videos\n \
-                Add the link to the below field and click download, \
-                your video will be downloaded automatically in the \
-                highest resolution", 
+            text=
+            "Download your youtube Videos\n \
+            Add the link to the below field and click download, \
+            your video will be downloaded automatically in the \
+            highest resolution", 
             wraplengt=350, 
             width=53
             )
         self.description.grid(row=0, column=1, columnspan=2)
     
     def entry_url(self):
-        self.video_url = Entry(root)
-        self.video_url.grid(row=1,column=1, sticky=EW, columnspan=2)
+        self.video_url = ttk.Entry(root)
+        self.video_url.grid(row=1,column=1, sticky=EW, columnspan=2, padx=10, pady=5)
 
     def search_button(self):
-        self.search_btn = Button(
+        self.search_btn = ttk.Button(
             root, text="Search", 
             command= lambda: show_video_info_action(self.video_url, self.file_folder), 
             width=10
         )
-        self.search_btn.grid(row=2,column=1, sticky=EW, padx=2)
+        self.search_btn.grid(row=2,column=1, sticky=EW, padx=10, pady=5)
 
     def browse_folder_button(self):
-        self.folder_btn = Button(root, text="folder", command=self.browse_action, width=10)
-        self.folder_btn.grid(row=2,column=2, sticky=EW, padx=2)
+        self.folder_btn = ttk.Button(root, text="folder", command=self.browse_action, width=10)
+        self.folder_btn.grid(row=2,column=2, sticky=EW, padx=10, pady=5)
     
     def browse_folder_label(self):
         self.browse_message.set(f"Set a download folder")
-        self.browse_lbl = Label(master=self.parent,textvariable=self.browse_message)
-        self.browse_lbl.grid(row=3, column=1, columnspan=2, sticky=W)
+        self.browse_lbl = ttk.Label(master=self.parent,textvariable=self.browse_message)
+        self.browse_lbl.grid(row=3, column=1, columnspan=2, sticky=W, padx=10, pady=2)
 
     def browse_action(self):
         self.file_folder = filedialog.askdirectory()
