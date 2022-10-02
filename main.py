@@ -1,21 +1,24 @@
-from pytube import YouTube
-import os
 from tkinter import *
-from tkinter import messagebox as MessageBox
 from PIL import Image, ImageTk
-from actions.actions import author_info_popup, download_accion, show_video_info_action
+from actions.actions import author_info_popup, show_video_info_action
 from tkinter import filedialog
+
 class App(Frame):
 
     def __init__(self, parent, *args, **kwargs):
         Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
+
+        # Config Main frame
         self.parent.geometry("480x320")
-        self.config(bd=15, width=480,height=320)
         self.parent.title("Download youtube videos")
+
+        # Variables
         self.folder_path= StringVar()
         self.browse_message = StringVar()
         self.file_folder = None
+
+        # components
         self.set_logo()
         self.menu_bar()
         self.instructions()
@@ -54,9 +57,12 @@ class App(Frame):
         self.video_url.grid(row=1,column=1, sticky=EW, columnspan=2)
 
     def search_button(self):
-        self.search_btn = Button(root, text="Search", command= lambda: show_video_info_action(self.video_url, self.file_folder), width=10)
+        self.search_btn = Button(
+            root, text="Search", 
+            command= lambda: show_video_info_action(self.video_url, self.file_folder), 
+            width=10
+        )
         self.search_btn.grid(row=2,column=1, sticky=EW, padx=2)
-
 
     def browse_folder_button(self):
         self.folder_btn = Button(root, text="folder", command=self.browse_action, width=10)

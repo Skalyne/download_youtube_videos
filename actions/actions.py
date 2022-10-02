@@ -1,6 +1,6 @@
 from pytube import YouTube
 from tkinter import EW, NW, messagebox as MessageBox
-from tkinter import Label, OptionMenu, StringVar, Button
+from tkinter import Label, Button
 from PIL import Image, ImageTk
 from urllib.request import urlopen
 import io
@@ -11,7 +11,23 @@ def download_accion(video_url, output_path = None):
     download.download(output_path=output_path)
 
 def show_video_info_action(video_url, file_folder):
-    video = YouTube(video_url.get())
+    if video_url.get() == "":
+        MessageBox.showinfo(
+            "Empty Field", 
+            "the url field is empty, please add a valid link")
+        return None
+
+    try: 
+        video = YouTube(video_url.get())
+    except:
+        MessageBox.showerror(
+            "Url not valid",
+            "A problem happends trying to get the video for te link you provided,\
+            please, ensure is a valid link"
+        )
+        video_url.delete(0, 'end')
+        return None
+
     thumbnail_url = urlopen(video.thumbnail_url)
     raw_data = thumbnail_url.read()
     thumbnail_url.close()

@@ -18,8 +18,8 @@ By now is an easy function, just add the url and click download, it will downloa
 Now you can choose where you want to download your video, if you don´t choose a file directory, it will be downloaded in the program root directory
 
 ### future improvements
-show data of video before download
+show data of video before download (WIP)
 direct default download
 decide quality / format
 decide video or audio
-change tkinter, too ugly
+change tkinter, too ugly (sv-ttk 2.0.0 as a theme)
