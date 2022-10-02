@@ -22,8 +22,7 @@ def show_video_info_action(video_url, file_folder):
     except:
         MessageBox.showerror(
             "Url not valid",
-            "A problem happends trying to get the video for te link you provided,\
-            please, ensure is a valid link"
+            "A problem happends trying to get the video for te link you provided, please, ensure is a valid link"
         )
         video_url.delete(0, 'end')
         return None
